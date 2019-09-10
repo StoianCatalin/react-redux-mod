@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { inputs, outputs } from '../../../redux_setup/redux.decorators';
+import { Inject, Inputs, Outputs } from '../../../decorators/redux.decorators';
 import { DummyActions } from '../dummy.reducer';
 import logo from '../../../assets/logo.svg';
 import produce from 'immer';
 import { AppState } from '../../../redux_setup/root.reducer';
+import UserService from '../../../shared/services/User.service';
 
 interface PropType {
     isDummy: boolean;
@@ -14,14 +15,15 @@ interface StateType {
     isDummy: boolean;
 }
 
-@inputs((state: Pick<AppState, 'dummy'>) => ({
+@Inputs((state: Pick<AppState, 'dummy'>) => ({
     isDummy: state.dummy.isDummy
 }))
-@outputs((dispatch: Function, ownProps: PropType) => ({
+@Outputs((dispatch: Function, ownProps: PropType) => ({
     setDummyStatus: (value: boolean) => {
         dispatch(DummyActions.setDummyState(value));
     }
 }))
+@Inject({ userService: UserService })
 export default class DummyScreen extends React.Component<PropType, StateType> {
     constructor(props: PropType) {
         super(props);
@@ -41,9 +43,9 @@ export default class DummyScreen extends React.Component<PropType, StateType> {
             <div className="App">
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
-                    <p>
+                    <span>
                         Is dummy? <p>{this.state.isDummy ? 'Yes' : 'No'}</p>
-                    </p>
+                    </span>
                     <button onClick={() => {
                         this.props.setDummyStatus(!this.state.isDummy);
                     }}>
