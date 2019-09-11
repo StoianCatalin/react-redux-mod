@@ -31,6 +31,7 @@ export default class DummyScreen extends React.Component<PropType, StateType> {
         this.state = {
             isDummy: this.props.isDummy
         }
+        // UserService is available through this.props.userService
     }
 
     componentWillReceiveProps(nextProps: PropType): void {
