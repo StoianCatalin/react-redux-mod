@@ -4,11 +4,12 @@ import { DummyActions } from '../dummy.reducer';
 import logo from '../../../assets/logo.svg';
 import produce from 'immer';
 import { AppState } from '../../../redux_setup/root.reducer';
-import UserService from '../../../shared/services/User.service';
+import UserServiceInstance, { UserService } from '../../../shared/services/User.service';
 
 interface PropType {
     isDummy: boolean;
     setDummyStatus: (value: boolean) => void
+    userService: UserService
 }
 
 interface StateType {
@@ -23,7 +24,7 @@ interface StateType {
         dispatch(DummyActions.setDummyState(value));
     }
 }))
-@Inject({ userService: UserService })
+@Inject({ userService: UserServiceInstance })
 export default class DummyScreen extends React.Component<PropType, StateType> {
     constructor(props: PropType) {
         super(props);
