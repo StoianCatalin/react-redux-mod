@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Inject, Inputs, Outputs } from '../../../decorators/redux.decorators';
-import { DummyActions } from '../dummy.reducer';
+import { DummyActions, DummyState } from '../dummy.reducer';
 import logo from '../../../assets/logo.svg';
 import produce from 'immer';
 import { AppState } from '../../../redux_setup/root.reducer';
@@ -16,7 +16,7 @@ interface StateType {
     isDummy: boolean;
 }
 
-@Inputs((state: Pick<AppState, 'dummy'>) => ({
+@Inputs((state: AppState): DummyState => ({
     isDummy: state.dummy.isDummy
 }))
 @Outputs((dispatch: Function, ownProps: PropType) => ({
